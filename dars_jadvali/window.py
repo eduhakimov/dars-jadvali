@@ -734,6 +734,7 @@ class SettingsPage(QWidget):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         host = QWidget()
         scroll.setWidget(host)
         outer.addWidget(scroll)
@@ -992,6 +993,16 @@ class NavButton(QPushButton):
         self.setIcon(icon(self.icon_name, accent() if self.isChecked() else pal()["muted"]))
 
 
+class PageCount:
+    """BaseMainWindow._nav o'rnida: tekshiruv vositalari sahifalar sonini bilishi uchun."""
+
+    def __init__(self, stack):
+        self.stack = stack
+
+    def count(self):
+        return self.stack.count()
+
+
 class MainWindow(BaseMainWindow):
     def __init__(self):
         super().__init__()
@@ -1044,6 +1055,8 @@ class MainWindow(BaseMainWindow):
         rl.addWidget(self.stack, 1)
         self.setCentralWidget(root)
         self.nav.idClicked.connect(self.set_page)
+        self._nav = PageCount(self.stack)   # uzkit/verify: sahifalar soni
+
         start_page = 0 if is_demo() else int(self.settings.get("last_page", 0) or 0)
         self.set_page(start_page)
 

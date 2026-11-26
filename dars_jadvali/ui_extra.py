@@ -38,7 +38,7 @@ register({
 
 
 # --------------------------------------------------------------------------- demo / ma'lumotlar papkasi
-_DEMO_DIR: Optional[Path] = None
+_DEMO_DIRS = {}
 
 
 def is_demo() -> bool:
@@ -48,11 +48,12 @@ def is_demo() -> bool:
 
 def app_data_dir(slug: str) -> Path:
     """Haqiqiy rejimda %APPDATA%/BahtiyorSoft/<slug>, skrinshot rejimida vaqtinchalik papka."""
-    global _DEMO_DIR
     if is_demo() or "pytest" in sys.modules:
-        if _DEMO_DIR is None:
-            _DEMO_DIR = Path(tempfile.mkdtemp(prefix=f"{slug}_demo_"))
-        return _DEMO_DIR
+        from uzkit.i18n import language
+        lang = language()                      # har bir til uchun alohida namunaviy baza
+        if lang not in _DEMO_DIRS:
+            _DEMO_DIRS[lang] = Path(tempfile.mkdtemp(prefix=f"{slug}_demo_{lang}_"))
+        return _DEMO_DIRS[lang]
     return data_dir(slug)
 
 
@@ -283,6 +284,8 @@ class DonutChart(QWidget):
         c = pal()
         w, h = self.width(), self.height()
         d = min(h - 10, w * 0.45)
+        if w - d - 30 < 230:                      # afsona uchun joy qoldirish
+            d = min(h - 10, max(100.0, w - 260))
         rect = QRectF(8, (h - d) / 2, d, d)
         total = sum(v for _, v, _ in self.data)
         thick = max(14.0, d * 0.16)
@@ -361,13 +364,15 @@ class BarChart(QWidget):
 
     @staticmethod
     def _nice_max(v: float) -> float:
+        """Yuqori chegara = 4 * "chiroyli" qadam (1, 2, 5 x 10^k), shunda belgilar butun va toza bo'ladi."""
         if v <= 0:
-            return 1.0
-        exp = 10 ** math.floor(math.log10(v))
-        for m in (1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10):
-            if m * exp >= v:
-                return m * exp
-        return 10 * exp
+            return 4.0
+        raw = v / 4
+        exp = 10 ** math.floor(math.log10(raw))
+        for m in (1, 2, 5, 10):
+            if m * exp >= raw:
+                return 4 * m * exp
+        return 40 * exp
 
     def paintEvent(self, e):
         p = QPainter(self)
