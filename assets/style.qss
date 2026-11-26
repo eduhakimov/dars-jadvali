@@ -1,0 +1,20 @@
+QFrame#TopBar { background: {surface}; border-bottom: 1px solid {border}; }
+QLabel#AppName { font-size: 12pt; font-weight: 700; padding-left: 4px; }
+QLabel#Clock { color: {muted}; font-size: 10pt; }
+QPushButton#TopNav { background: transparent; border: none; border-radius: 0; padding: 10px 14px; color: {muted};
+    font-size: 10.5pt; border-bottom: 3px solid transparent; }
+QPushButton#TopNav:hover { color: {text}; background: {hover}; }
+QPushButton#TopNav:checked { color: {accent}; border-bottom: 3px solid {accent}; font-weight: 600; }
+QFrame#Card { border-radius: 6px; }
+QPushButton { border-radius: 5px; }
+QPushButton#Seg { border-radius: 14px; padding: 5px 14px; background: transparent; }
+QPushButton#Seg:checked { background: {accent}; color: white; border-color: {accent}; font-weight: 600; }
+QLabel#Title { font-size: 20pt; font-weight: 600; }
+QLabel#WeekLabel { font-size: 11pt; padding-left: 6px; }
+QFrame#Hero { background: {accent}; border-radius: 10px; }
+QFrame#Hero QLabel { color: white; background: transparent; }
+QLabel#HeroCap { color: rgba(255,255,255,0.82); font-size: 10pt; }
+QLabel#HeroTitle { font-size: 17pt; font-weight: 700; }
+QLabel#HeroBig { font-size: 15pt; font-weight: 700; }
+QFrame#QuickAdd { background: {surface}; border: 1px solid {border}; border-radius: 8px; }
+QLineEdit#QuickEdit { border: none; background: transparent; font-size: 11pt; }

@@ -1,0 +1,88 @@
+{
+  "slug": "dars-jadvali",
+  "exe_name": "DarsJadvali",
+  "version": "1.0.0",
+  "accent": "#3b5bdb",
+  "icon_text": "DJ",
+  "folder": "Dars jadvali",
+  "font": "Bahnschrift",
+  "name": {
+    "uz": "Dars jadvali va deadline eslatuvchisi",
+    "ru": "Расписание занятий и напоминания о сроках",
+    "en": "Timetable & Deadline Reminder"
+  },
+  "description": {
+    "uz": "O'qituvchi uchun haftalik dars jadvali: para vaqtlari, toq/juft haftalar, xona va guruhlar, rangli hafta to'ri, bugungi darslar, vazifalar va muddatlar. Dars boshlanishi va muddatlar oldidan Windows bildirishnomasi chiqaradi.",
+    "ru": "Недельное расписание для преподавателя: время пар, чётные/нечётные недели, аудитории и группы, цветная сетка недели, занятия на сегодня, задачи и сроки. Перед началом пары и перед сроками показывает уведомления Windows.",
+    "en": "A weekly timetable for lecturers: class periods, odd/even weeks, rooms and groups, a colour week grid, today's classes, tasks and deadlines. Shows Windows notifications before classes start and before deadlines."
+  },
+  "features": {
+    "uz": [
+      "Para vaqtlari sozlanadi (8:30–9:50 ...), ish kunlari tanlanadi",
+      "Toq/juft hafta: semestr boshidan hafta raqami avtomatik",
+      "Rangli hafta to'ri: fan, turi (ma'ruza, amaliy, laboratoriya, seminar), xona, guruh",
+      "Bugun sahifasi: keyingi darsgacha qolgan vaqt va bugungi vazifalar",
+      "Vazifalar: muhimlik, muddat, tezkor qo'shish (Ctrl+N)",
+      "Darsdan N daqiqa va muddatdan 1 kun / 1 soat oldin bildirishnoma (tray)",
+      "Jadvalni PDF va PNG ga eksport, chop etish; JSON import/eksport",
+      "O'zbek, rus, ingliz tillari; yorug' va qorong'i mavzu; offline"
+    ],
+    "ru": [
+      "Настраиваемое время пар (8:30–9:50 ...) и рабочие дни",
+      "Чётные/нечётные недели: номер недели от начала семестра",
+      "Цветная сетка недели: предмет, тип (лекция, практика, лабораторная, семинар), аудитория, группа",
+      "Страница «Сегодня»: время до следующей пары и задачи на сегодня",
+      "Задачи: приоритет, срок, быстрое добавление (Ctrl+N)",
+      "Уведомления за N минут до пары и за 1 день / 1 час до срока (трей)",
+      "Экспорт расписания в PDF и PNG, печать; импорт/экспорт JSON",
+      "Узбекский, русский, английский; светлая и тёмная тема; офлайн"
+    ],
+    "en": [
+      "Configurable class periods (8:30–9:50 ...) and working days",
+      "Odd/even weeks: week number counted from the semester start",
+      "Colour week grid: subject, type (lecture, practical, lab, seminar), room, group",
+      "Today page: time to the next class and tasks due today",
+      "Tasks with priority and due time, quick add (Ctrl+N)",
+      "Notifications N minutes before a class and 1 day / 1 hour before deadlines (tray)",
+      "Export timetable to PDF and PNG, print; JSON import/export",
+      "Uzbek, Russian, English; light and dark themes; offline"
+    ]
+  },
+  "category": "Ta'lim",
+  "topics": [
+    "timetable",
+    "schedule",
+    "deadline-reminder",
+    "university"
+  ],
+  "min_os": "Windows 10 (1809+) / Windows 11, x64",
+  "build": {
+    "mode": "onefile",
+    "excludes": [
+      "PIL",
+      "numpy",
+      "matplotlib",
+      "pandas"
+    ]
+  },
+  "palette": {
+    "light": {
+      "bg": "#eef1f6",
+      "surface": "#ffffff",
+      "surface2": "#e8ecf3",
+      "border": "#d3d9e4",
+      "text": "#18202e",
+      "muted": "#5d6a80",
+      "hover": "#e1e6ef"
+    },
+    "dark": {
+      "bg": "#10151f",
+      "surface": "#182030",
+      "surface2": "#202a3d",
+      "border": "#2c3850",
+      "text": "#e6ebf5",
+      "muted": "#8f9bb3",
+      "hover": "#243049"
+    }
+  }
+}
