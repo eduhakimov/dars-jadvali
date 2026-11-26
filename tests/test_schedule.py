@@ -154,3 +154,31 @@ def test_exports(tmp_path):
     img = w.week._render_image(800, 500)
     assert img.save(str(tmp_path / "a.png"))
     w.close()
+
+
+def test_ui_flows():
+    from PySide6.QtWidgets import QApplication
+    QApplication.instance() or QApplication([])
+    from uzkit import app as appmod
+    from uzkit.settings import Settings
+    appmod.META = appmod.load_meta()
+    appmod.SETTINGS = Settings(appmod.META["slug"] + "_test")
+    from dars_jadvali import window
+    w = window.MainWindow()
+    w.store.data = window.demo_data()
+    w.refresh_all()
+    l = w.store.lessons[0]
+    d = window.LessonDialog(w, w.store, l)
+    assert d.values()["subject"] == l["subject"]
+    d.close()
+    window.DeadlineDialog(w, w.store, w.store.deadlines[0]).close()
+    w.tasks.q_title.setText("Test task")
+    w.tasks.quick_add()
+    assert any(x["title"] == "Test task" for x in w.store.deadlines)
+    for i in range(4):
+        w.tasks.filter_btns.button(i).click()
+        w.set_page(i)
+    w.week.shift(7)
+    w.week.all_cb.setChecked(True)
+    w.check_notifications()
+    w.close()
