@@ -797,7 +797,7 @@ class SettingsPage(QWidget):
         self.min_before = QSpinBox()
         self.min_before.setRange(0, 120)
         self.min_before.setSuffix(" " + tr("min_short"))
-        self.min_before.setValue(win.settings.get("class_minutes", 10))
+        self.min_before.setValue(win.class_minutes())
         self.min_before.valueChanged.connect(lambda v: self._set("class_minutes", v))
         nf.addRow(tr("before_class"), self.min_before)
         nt.add(nf)
@@ -814,7 +814,7 @@ class SettingsPage(QWidget):
         drow2.addStretch(1)
         nt.add(drow2)
         self.tray_cb = QCheckBox(tr("minimize_to_tray"))
-        self.tray_cb.setChecked(win.settings.get("minimize_to_tray", True))
+        self.tray_cb.setChecked(bool(win.settings.get("minimize_to_tray", True)))
         self.tray_cb.toggled.connect(lambda v: (self._set("minimize_to_tray", v), win.apply_tray_mode()))
         nt.add(self.tray_cb)
         self.auto_cb = QCheckBox(tr("autostart"))
@@ -1127,7 +1127,14 @@ class MainWindow(BaseMainWindow):
         self.refresh_all()
 
     def deadline_offsets(self):
-        return self.settings.get("deadline_offsets", [1440, 60])
+        v = self.settings.get("deadline_offsets", [1440, 60])
+        if not isinstance(v, list):
+            return [1440, 60]
+        return [m for m in v if isinstance(m, int) and not isinstance(m, bool) and m > 0]
+
+    def class_minutes(self) -> int:
+        v = self.settings.get("class_minutes", 10)
+        return v if isinstance(v, int) and not isinstance(v, bool) and 0 <= v <= 240 else 10
 
     def apply_tray_mode(self):
         on = self.settings.get("minimize_to_tray", True) and self.tray.available()
@@ -1222,7 +1229,7 @@ class MainWindow(BaseMainWindow):
             st = self.store
             n = datetime.now()
             for key, l, s in sc.class_notifications(st.lessons, st.pairs, n, st.semester_start,
-                                                   int(self.settings.get("class_minutes", 10)), st.notified):
+                                                   self.class_minutes(), st.notified):
                 st.mark_notified(key)
                 mins = max(0, round((s - n).total_seconds() / 60))
                 self.tray.notify(tr("class_soon", m=mins),
